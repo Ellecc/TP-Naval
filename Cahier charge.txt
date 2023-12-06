@@ -1,0 +1,15 @@
+
+function nous :
+create board(size_board , num_boat)--> board
+select()--> position(input)
+
+
+function bot:
+create board(size_board , num_boat)--> board
+select()--> position(input)
+
+function global:
+compare(board, select)--> bool
+refresh(board)-->board
+win(board)--> game stat
+pick up info() -->( size_board , num_boat )
