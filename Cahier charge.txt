@@ -1,11 +1,13 @@
 
 function nous :
 create board(size_board , num_boat)--> board
+add boat(num_boat)--> final_board
 select()--> position(input)
 
 
 function bot:
 create board(size_board , num_boat)--> board
+add boat(num_boat)---> final_board
 select()--> position(input)
 
 function global:

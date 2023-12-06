@@ -1,4 +1,7 @@
 from Naval_function import *
+from math import *
+from random import *
+
 screen = True
 while screen:
     game_stat = True
@@ -7,3 +10,4 @@ while screen:
     num_boat = info[1]
     while game_stat:
         board_player = create_board_player(size_board , num_boat)
+
