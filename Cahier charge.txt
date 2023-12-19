@@ -1,17 +1,102 @@
+Projet bataille Naval
 
-function nous :
-create board(size_board , num_boat)--> board
-add boat(num_boat)--> final_board
-select()--> position(input)
+Introduction : Création d'un jeux de bataille Naval en python et réalisation d'un rapport
+
+Membre : Jules Loiseau 107, Eloi Leclair 107
+
+Context : projet de cours de première NSI
+
+Objectif : Un jeux de bataille Naval fonctionnel avec un affichage à chaque manche joué ainsi qu'un rapport détaillant tout le projet.
+
+Cahier des charge : Fonctonnalité/Contrainte/Solution
+                    Utilisation d'un plateau de jeu/ Taille 10x10 (plateau bot et joueur)/ Fonction approprier
+                    Programmation en python/ utilisation d'aux moins deux type construit/ p-upleet, liste ou dictionnaire
+                    Placement des bateaux sur le plateau/ 6 bateaux: 2 de longueur 2, 3 de longueur 3 et 1 de  longueur 5/ Fonction approprier
+                    Le bot place aléatoirement c'est bateaux/ Taille du plateau et des bateaux à respecter/ Fonction approprier
+                    chaque tour le joueur tire sur une case adverse/ Taille du plateau et reconnaissance de la case sur laquelle le joueur tir/ Fonction approprier
+                    Chaque tour le bot tire sur une case aléatoir adverse/ Taille du plateaureconnaisance de la case sur laquelle le bot tir/ Fonction approprier
+                    chaque tour mise a jour visuel/ interface visuel dans le terminal sous forme de matrice/ Fonction approprier
+                    Affichage de fin de partie/ comptage et vérification des bateaux restant/ Fonction approprier
+                    Commentaire et Docstring/ Rendu du code propre et lisible par n'importe qui
+
+Méthodologie et répartition du travaille :
+            Eloi : 
+                -create_board_player
+                -add_boat
+                -select
+                -create_board_bot
+            Jules
+                -create_board_player
+                -compare
+                -win
+                -refresh
+                -
+
+Fonction : 
+        -création du plateau du joueur
+        -ajout des bateau pour le joueur
+        -création du plateau bot avec placement des bateaux aléatoirement
+        -selection de la case sur laquelle le joueur veux tiré ou aléatoirement pour le bot 
+        -comparaison de la case indiqué par le joueur ou bot dans la fonction select avec celle du plateau pour vérifier si un bateaux si trouve
+        -rafraichisement du plateau après chaque tir de bot ou de joueur
+        -condition permettant la fin du jeux lorsque tout les bateaux du joueur ou du bot sont coulé
+                
+Fonction optionnel :
+        -taille du plateau et nombre de bateaux de chaque taille réglable par le joueur (dans les limites du possible) 
+        -interface graphique pour le plateau de jeux
+        -plusieurs difficulté de bot
+        -joueurs 1vs1
+        
+Date de rendu: 19 Janvier au soir
 
 
-function bot:
-create board(size_board , num_boat)--> board
-add boat(num_boat)---> final_board
-select()--> position(input)
+Docstring des fonction: 
 
-function global:
-compare(board, select)--> bool
-refresh(board)-->board
-win(board)--> game stat
-pick up info() -->( size_board , num_boat )
+    create_board_player:
+        parametres --> taille de tableau (int) \ nombre de case avec des bateaux (int)
+        retourne --> tableau (matrice)
+        rôle --> creer une tableau et permet au joueur de placer ses bateaux grâce a la fonction add_boat()
+        qui --> fait à 2
+
+    add_boat:
+        parametres --> taille de tableau (int) \ nombre de case avec des bateaux (int) \ tableau (matrice) \ dicionnaire de coordonées (dictionnaire)
+        retourne --> tableau (matrice)
+        rôle -->intervient dans la fonction create_board_player et permet au joueur de placer ses bateaux 
+        qui --> éloi
+
+    select:
+        parametres -> qui: bot/joueur (str)
+        retourne --> position (tuple)
+        rôle --> permet de récuperer des coordonnées données par le joueur ou aléatoirement par le bot
+        qui --> éloi
+
+    create_board_bot:
+        parametres --> taille de tableau (int) \ nombre de case avec des bateaux (int)
+        retourne --> tableau (matrice)
+        rôle --> creer une tableau et place aléatoirement les bateaux
+        qui --> éloi
+
+    compare:
+        parametres --> tableau (matrice) \ coordonées (tuple)
+        retourne --> booléen
+        rôle --> vérifier si il y à un bateau au coordonnées rentrées
+        qui --> jules
+    
+    win:
+        parametres --> tableau (matrice)
+        retourne --> booléen
+        rôle --> vérifier si un utilisateur a gagné
+        qui --> jules
+
+    refresh:
+        parametres --> tableau (matrice)
+        retourne --> /
+        rôle --> rafraichir l'affichage du jeu à chaque changement sur le plateau
+        qui --> jules
+    
+    optionnel:
+     pick_up_infos:
+        parametres --> /
+        retourne --> taille de tableau (int) \ nombre de cases avec des bateaux (int)  
+        rôle --> récuperer les parametres du jeu données par le joueur
+        qui --> jules
