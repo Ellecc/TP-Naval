@@ -19,7 +19,7 @@ def pick_up_info():
               )
         pick_up_info()
 
-        
+
 
 def create_board_player(size_board , num_boat):
         # creer une matrice grâce au input 
@@ -102,3 +102,4 @@ def win(board):
     else:
         return True
     
+def compare()
