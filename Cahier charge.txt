@@ -30,7 +30,7 @@ Méthodologie et répartition du travaille :
                 -compare
                 -win
                 -refresh
-                -
+                -pick_up_infos
 
 Fonction : 
         -création du plateau du joueur
