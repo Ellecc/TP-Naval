@@ -166,3 +166,27 @@ def win(board):
         return True
     
 
+def fire_player(dico_coordonne, board_bot ):
+    x = int(input("Rentré les coordonné x comprise entre 1 et 10 "))-1
+    y = dico_coordonne[input("Rentré une coordonné y comprise entre A et J ")]
+    crash = 1
+    while crash == 1:
+        if board_bot[x][y] == 1:
+            board_bot[x][y] = 0
+            print("Touché !!")
+            crash = 0
+
+        
+
+
+
+
+
+
+            
+
+        
+       
+
+        
+    
