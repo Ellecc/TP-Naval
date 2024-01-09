@@ -24,8 +24,7 @@ dico_coordonne = {
         "J":9,
         }
 
-
-
+liste_atack_bot = []
 
 def create_board_player():
         # creer une matrice grâce au input 
@@ -127,17 +126,6 @@ def add_boat(matrice, num_boat, size_board):
         # Vérification que les donné rentré par le joueur rentre dans le plateau ( à faire )
         # Vérification que les donné du joueur ne font pas chevauché 2 bateaux ( à faire )
         # Affichage du plateau avec la position du bateau ( à faire )
-                    
-
-          
-
-            
-
-        
-        
-    
-    
-
     
 def create_board_bot(size_board, num_boat):
     # creer une matrice grâce au input 
@@ -169,14 +157,31 @@ def win(board):
 def fire_player(dico_coordonne, board_bot ):
     x = int(input("Rentré les coordonné x comprise entre 1 et 10 "))-1
     y = dico_coordonne[input("Rentré une coordonné y comprise entre A et J ")]
-    crash = 1
-    while crash == 1:
-        if board_bot[x][y] == 1:
-            board_bot[x][y] = 0
-            print("Touché !!")
-            crash = 0
+    if board_bot[x][y] == 1:
+        board_bot[x][y] = 0
+        print("Touché !!")
+    else:
+        print("Il n'y a pas de bateau ici. Désoler. ")
 
-        
+    print(board_bot)
+    return board_bot
+
+def fire_bot(liste_atack_bot, board_player):
+    valid = False
+    while valid == False:
+        x = randint(0, 9)
+        y = randint(0, 9)
+        if (x, y) not in liste_atack_bot:
+            if board_player[x][y] == 1:
+                board_player[x][y] = 0
+                print("Touché !!")
+                liste_atack_bot.append((x, y))
+                valid = True
+            else:
+                print("Vous n'avez subit aucun dégats !!")
+
+
+
 
 
 
