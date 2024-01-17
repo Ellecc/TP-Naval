@@ -269,31 +269,59 @@ def win(board):
         return True
     
 
-def fire_player(dico_coordonne, board_bot ):
+def fire_player(dico_coordonne, board_bot, dico_boat_bot):
+    # tirer sur une case sélectionné 
+    # coordonné, plateau du bot, emplacement des bateaux --> plateau
+    # condition: tirer sur le plateau et toucher ou toucher coulé
     x = int(input("Rentré les coordonné x comprise entre 1 et 10 "))-1
     y = dico_coordonne[input("Rentré une coordonné y comprise entre A et J ")]
+    flow = True
     if board_bot[x][y] == 1:
-        board_bot[x][y] = 0
-        print("Touché !!")
+        board_bot[x][y] = 'x'
+        for boat in dico_boat_bot:
+            if [x, y] in boat:
+                dico_boat_bot[boat] -= [x, y]
+                for i in boat:
+                    if board_bot[i [0]][i[1]] == 1:
+                        flow = False
     else:
         print("Il n'y a pas de bateau ici. Désoler. ")
+
+    if flow == False:
+        print("Touché !!")
+    else:
+        print("Touché coulé !!! Bien joué.")
 
     print(board_bot)
     return board_bot
 
-def fire_bot(liste_atack_bot, board_player):
+def fire_bot(liste_atack_bot, board_player, dico_boat_player):
+    # tirer sur une case aléatoirement 
+    # case déja tirer, plateau du bot, emplacement des bateaux--> plateau
+    # condition: tirer sur le plateau et toucher ou toucher coulé et ne pas re-tirer sur la même case
     valid = False
     while valid == False:
         x = randint(0, 9)
         y = randint(0, 9)
+        flow = True
         if (x, y) not in liste_atack_bot:
             if board_player[x][y] == 1:
-                board_player[x][y] = 0
-                print("Touché !!")
+                board_player[x][y] = 'x'
+                for boat in dico_boat_player:
+                    if [x, y] in boat:
+                        dico_boat_player[boat] -= [x, y]
+                        for i in boat:
+                            if dico_boat_player[i [0]][i[1]] == 1:
+                                flow = False
                 liste_atack_bot.append((x, y))
                 valid = True
             else:
                 print("Vous n'avez subit aucun dégats !!")
+
+            if flow == False:
+                print("Touché !!")
+            else:
+                print("Touché coulé !!! Bien joué.")
 
 
 
