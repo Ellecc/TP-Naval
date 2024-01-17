@@ -55,94 +55,209 @@ def create_board_player():
         "J":9,
         }
 
-def create_board_player(size_board):
-        # creer une matrice grâce au input 
-        # int --> matrice (list)
-        # condition 
-    num_boat = num_boat
-    long_board_player = []
-    board_player = []
-    # Création d'un plateau de jeux qui correspond au information qui on été demander au joueur
-    for size in range(size_board):
-        long_board_player += [0]
-    for size in range(size_board):
-        board_player += [long_board_player]
-    return board_player
+boat_liste = (2, 2, 3, 3, 3, 5)
 
-def add_boat(matrice, num_boat, size_board):
-# Direction traduit par un nombre pour une meilleur compréhension
+def add_boat(board, boat):
+    dico_boat_player = {}
+    num_boat = 0
+    # Direction traduit par un nombre pour une meilleur compréhension
     dico_direction = {
-        "haut" : 1,
-        "droite" : 1,
-        "bas" : -1,
-        "gauche" : -1,
+        "haut": -1,
+        "droite": 1,
+        "bas": 1,
+        "gauche": -1,
     }
     # Consigne de placage pour les bateaux 
     print("Vous allez placé les bateau sur le plateau de jeux de la manière suivante:\n"
             "1. vous donneré les coordonné X et Y du premier point du bateau\n"
             "2. vous donneré la direction vers laquelle s'étant le bateau\n"
-            "3. vous allez placer 2 bateaux de 2 case, 3 bateaux de 3 case et 1 bateaux de 5 case dans l'ordre"
+            "3. vous allez placer 2 bateaux de 2 case, 3 bateaux de 3 case et 1 bateaux de 5 case dans l'ordre\n"
+            
             "Pour rappel, deux bateau ne peuvent pas se chevauché et un bateau ne peux pas s'étendre hors du plateau\n"
-            "Si malgré cela une erreur se produit, Merci de bien vouloir relancer le jeux\n"
-            "Bon Jeux à vous")
-# Placement des 2 bateaux de 2
-    for i in range(2):
+            "Bon Jeux à vous\n")
+    # Placement des 2 bateaux de 2
+    for height in boat:
+        verif = 0
+        while verif != height:
+            x = int(input("Rentrez les coordonné x comprise entre 1 et 10 "))-1
+            y = dico_coordonne[input("Rentrez une coordonné y comprise entre A et J ")]
+            direction = input("Dans quelle direction voulez vous que le bateau soit dirigé: Haut, Bas, Gauche ou droite (Merci de donné votre réponse en minuscule) ")
 
-        x = int(input("Rentré les coordonné x comprise entre 1 et 10 "))-1
-        y = dico_coordonne[input("Rentré une coordonné y comprise entre A et J ")]
-        direction = input("Dans quelle direction voulez vous que le bateau soit dirigé: Haut, Bas, Gauche ou droite (Merci de donné votre réponse en minuscule) ")
-        
-        # Vérification que les donné rentré par le joueur rentre dans le plateau ( à faire )
-        if 9 >= x >= 0 and 9 >= y >= 0 and direction in dico_direction:
-        # Vérification que les donné du joueur ne font pas chevauché 2 bateaux ( à faire )
-            if matrice[y][x] == 0:
-                if direction == 'haut' or 'bas':
-                    if matrice[y + direction][x] == 0:
-                        matrice[y][x] = 1
-                        matrice[y + direction][x] = 1
+            # Vérification que les donné rentré par le joueur rentre dans le plateau
+            if 9 >= x >= 0 and 9 >= y >= 0 and direction in dico_direction:
+                # Vérification que les donné du joueur ne font pas chevauché 2 bateaux sur la case de départ
+                if board[y][x] == 0:
+                    # Variation en fonction de si le bateaux c'étant verticalement
+                    if direction in ['haut', 'bas']:
+                        # Vérification que les donné du joueur ne font pas chevauché 2 bateaux sur la case vers laquelle s'étant le bateaux
+                        if all(9 >= y + t >= 0 for t in range(height)):
+                            if all(board[y + dico_direction[direction] * t][x] == 0 for t in range(height)):
+                                one_boat = []
+                                for i in range(height):
+                                    board[y + dico_direction[direction] * i][x] = 1
+                                    verif += 1
+                                    one_boat += [[x,y + dico_direction[direction] * i]]
+                                num_boat += 1
+                                dico_boat_player['co_boat_' + str(num_boat)] = one_boat
 
+                            
+                            else:
+                                print("ERROR, un bateau se trouve déja ici !!!")
+                        else:
+                            print("ERROR, Le bateaux dépasse du plateau")
+
+                    else:
+                        # Variation en fonction de si le bateaux c'étant horizontalement
+                        if all(9 >= x + t >= 0 for t in range(height)):
+                            if all(board[y][x + dico_direction[direction] * t] == 0 for t in range(height)):
+                                one_boat = []
+                                for i in range(height):
+                                    board[y][x + dico_direction[direction] * i] = 1
+                                    verif += 1
+                                    one_boat += [[x + dico_direction[direction] * i,y]]
+                                num_boat += 1
+                                dico_boat_player['co_boat_' + str(num_boat)] = one_boat
+
+                            else:
+                                print("ERROR, un bateau se trouve déja ici")              
+                        else:
+                            print("ERROR, Le bateaux dépasse du plateau")
                 else:
-                    if matrice[y][x + direction] == 0:
-                        matrice[y][x] = 1
-                        matrice[y][x + direction] = 1
-        # Affichage du plateau avec la position du bateau ( à faire )
+                    print("ERROR, un bateau se trouve déja ici")
+            else:
+                print("ERROR, les donné ne sont pas conforme a ce qui est demandé !!!")
 
-# Placement des 3 bateau de 3
-    for i in range(3):
+            # Affichage de la grille avec des lettres pour les lignes et des chiffres pour les colonnes
+            letters = 'ABCDEFGHIJ'
+            # Affichage des chiffres de 1 à 10 pour les colonnes avec des séparateurs
+            print('    ' + ' | '.join(map(str, range(1, 10 + 1))))
+            print('-' * (4 * 10 + 2))  # Ligne de séparation
 
-        x = int(input("Rentré les coordonné x comprise entre 1 et 10 "))-1
-        y = dico_coordonne[input("Rentré une coordonné y comprise entre A et J ")]
-        direction = dico_direction[input("Dans quelle direction voulez vous que le bateau soit dirigé: Haut, Bas, Gauche ou droite (Merci de donné votre réponse en minuscule) ")]
-        # Vérification que les donné rentré par le joueur rentre dans le plateau ( à faire )
-        # Vérification que les donné du joueur ne font pas chevauché 2 bateaux ( à faire )
-        # Affichage du plateau avec la position du bateau ( à faire )
+            # La boucle prends chaque element de board_player(ligne) et lui donne un chiffre pour chaque ligne(i)
+            for i, ligne in enumerate(board):
+                # Affichage des lettres de A à J pour les lignes avec des séparateurs
+                print(letters[i] + ' | ' + ' | '.join(map(str, ligne)))
+                # print(f"{letters[i]} | {' | '.join(map(str, ligne))}")
+                print('-' * (4 * 10 + 2))  # Ligne de séparation
+            
+    return [dico_boat_player, board]
 
-# Placement du bateau de 5
-    for i in range(1):
+def add_boat_bot(board_bot, boat_liste):
+    dico_boat_bot = {}
+    num_boat = 0
+    liste_direction = ["haut","bas","droite","gauche"]
+    # Direction traduit par un nombre pour une meilleur compréhension
+    dico_direction = {
+        "haut": -1,
+        "droite": 1,
+        "bas": 1,
+        "gauche": -1,
+    }
+    # Placement des 2 bateaux de 2
+    for height in boat_liste:
+        verif = 0
+        while verif != height:
+            x = int(randint(1, 10))-1
+            y = int(randint(1, 10))-1
+            direction = choice(liste_direction)
 
-        x = int(input("Rentré les coordonné x comprise entre 1 et 10 "))-1
-        y = dico_coordonne[input("Rentré une coordonné y comprise entre A et J ")]
-        direction = dico_direction[input("Dans quelle direction voulez vous que le bateau soit dirigé: Haut, Bas, Gauche ou droite (Merci de donné votre réponse en minuscule) ")]
-        # Vérification que les donné rentré par le joueur rentre dans le plateau ( à faire )
-        # Vérification que les donné du joueur ne font pas chevauché 2 bateaux ( à faire )
-        # Affichage du plateau avec la position du bateau ( à faire )
-    
-def create_board_bot(size_board, num_boat):
-    # creer une matrice grâce au input 
+            # Vérification que les donné rentré par le joueur rentre dans le plateau
+            if 9 >= x >= 0 and 9 >= y >= 0 and direction in dico_direction:
+                # Vérification que les donné du joueur ne font pas chevauché 2 bateaux sur la case de départ
+                if board_bot[y][x] == 0:
+                    # Variation en fonction de si le bateaux c'étant verticalement
+                    if direction in ['haut', 'bas']:
+                        # Vérification que les donné du joueur ne font pas chevauché 2 bateaux sur la case vers laquelle s'étant le bateaux
+                        if all(9 >= y + t * dico_direction[direction] >= 0 for t in range(height)):
+                            if all(board_bot[y + dico_direction[direction] * t][x] == 0 for t in range(height)):
+                                one_boat = []
+                                for i in range(height):
+                                    board_bot[y + dico_direction[direction] * i][x] = 1
+                                    verif += 1
+                                    one_boat += [[x,y + dico_direction[direction] * i]]
+                                num_boat += 1
+                                dico_boat_bot['co_boat_' + str(num_boat)] = one_boat
+
+                    else:
+                        # Variation en fonction de si le bateaux c'étant horizontalement
+                        if all(9 >= x + t * dico_direction[direction] >= 0 for t in range(height)):
+                            if all(board_bot[y][x + dico_direction[direction] * t] == 0 for t in range(height)):
+                                one_boat = []
+                                for i in range(height):
+                                    board_bot[y][x + dico_direction[direction] * i] = 1
+                                    verif += 1
+                                    one_boat += [[x + dico_direction[direction] * i,y]]
+                                num_boat += 1
+                                dico_boat_bot['co_boat_' + str(num_boat)] = one_boat
+
+    # Affichage de la grille avec des lettres pour les lignes et des chiffres pour les colonnes
+    letters = 'ABCDEFGHIJ'
+    # Affichage des chiffres de 1 à 10 pour les colonnes avec des séparateurs
+    print('    ' + ' | '.join(map(str, range(1, 10 + 1))))
+    print('-' * (4 * 10 + 2))  # Ligne de séparation
+
+    # La boucle prends chaque element de board_player(ligne) et lui donne un chiffre pour chaque ligne(i)
+    for i, ligne in enumerate(board_bot):
+        # Affichage des lettres de A à J pour les lignes avec des séparateurs
+        print(letters[i] + ' | ' + ' | '.join(map(str, ligne)))
+        # print(f"{letters[i]} | {' | '.join(map(str, ligne))}")
+        print('-' * (4 * 10 + 2))  # Ligne de séparation
+    print()
+            
+    return [dico_boat_bot, board_bot]
+
+def create_board_bot(size_board):
+    # creer une matrice grâce au input
     # int --> matrice (list)
-    # condition 
-    long_board_player = []
+    # condition
+    long_board_bot = []
     board_bot = []
-    # création du plateau du bot en accord avec les paramètres que le joueur à choisi au début
-    for size in range(int(sqrt(size_board))):
-        long_board_player += [0]
-    for size in range(int(sqrt(size_board))):
-        board_player += [long_board_player]
-    add_boat_bot(board_bot, num_boat)
-    return board_player
+    # Création d'un plateau de jeux qui correspond au information qui on été demander au joueur
+    for row in range(size_board):
+        board_bot.append([])
+        for column in range(size_board):
+            board_bot[row].append(0)
 
-def add_boat_bot(matrice, num_boat):
-    pass
+    # Affichage de la grille avec des lettres pour les lignes et des chiffres pour les colonnes
+    letters = 'ABCDEFGHIJ'
+    # Affichage des chiffres de 1 à 10 pour les colonnes avec des séparateurs
+    print('    ' + ' | '.join(map(str, range(1, size_board + 1))))
+    print('-' * (4 * size_board + 2))  # Ligne de séparation
+
+    # La boucle prends chaque element de board_player(ligne) et lui donne un chiffre pour chaque ligne(i)
+    for i, ligne in enumerate(board_bot):
+        # Affichage des lettres de A à J pour les lignes avec des séparateurs
+        print(letters[i] + ' | ' + ' | '.join(map(str, ligne)))
+        print('-' * (4 * size_board + 2))  # Ligne de séparation
+    print()
+
+    return board_bot
+
+def create_board_player(size_board):
+    # creer une matrice grâce au input
+    # int --> matrice (list)
+    # condition
+    long_board_player = []
+    board_player = []
+    # Création d'un plateau de jeux qui correspond au information qui on été demander au joueur
+    for row in range(size_board):
+        board_player.append([])
+        for column in range(size_board):
+            board_player[row].append(0)
+
+    # Affichage de la grille avec des lettres pour les lignes et des chiffres pour les colonnes
+    letters = 'ABCDEFGHIJ'
+    # Affichage des chiffres de 1 à 10 pour les colonnes avec des séparateurs
+    print('    ' + ' | '.join(map(str, range(1, size_board + 1))))
+    print('-' * (4 * size_board + 2))  # Ligne de séparation
+
+    # La boucle prends chaque element de board_player(ligne) et lui donne un chiffre pour chaque ligne(i)
+    for i, ligne in enumerate(board_player):
+        # Affichage des lettres de A à J pour les lignes avec des séparateurs
+        print(letters[i] + ' | ' + ' | '.join(map(str, ligne)))
+        print('-' * (4 * size_board + 2))  # Ligne de séparation
+
+    return board_player
 
 def win(board):
     # verifier si il reste des bateaux(1) dans une matrice
