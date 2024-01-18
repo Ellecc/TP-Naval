@@ -24,36 +24,7 @@ dico_coordonne = {
         "J":9,
         }
 
-liste_atack_bot = []
-
-def create_board_player():
-        # creer une matrice grâce au input 
-        # int --> matrice (list)
-        # condition 
-    size_board = 10
-    num_boat = 6
-    dico_coordonne = {
-        0:"A",
-        1:"B",
-        2:"C",
-        3:"D",
-        4:"E",
-        5:"F",
-        6:"G",
-        7:"H",
-        8:"I",
-        9:"J",
-        "A":0,
-        "B":1,
-        "C":2,
-        "D":3,
-        "E":4,
-        "F":5,
-        "G":6,
-        "H":7,
-        "I":8,
-        "J":9,
-        }
+liste_attack_bot = []
 
 boat_liste = (2, 2, 3, 3, 3, 5)
 
@@ -127,18 +98,23 @@ def add_boat(board, boat):
             else:
                 print("ERROR, les donné ne sont pas conforme a ce qui est demandé !!!")
 
-            # Affichage de la grille avec des lettres pour les lignes et des chiffres pour les colonnes
-            letters = 'ABCDEFGHIJ'
-            # Affichage des chiffres de 1 à 10 pour les colonnes avec des séparateurs
-            print('    ' + ' | '.join(map(str, range(1, 10 + 1))))
-            print('-' * (4 * 10 + 2))  # Ligne de séparation
+        # Affichage de la grille avec des lettres pour les lignes et des chiffres pour les colonnes
+        letters = 'ABCDEFGHIJ'
+        # Affichage des chiffres de 1 à 10 pour les colonnes avec des séparateurs
+        print('   ', end="")
+        for i, number in enumerate(range(1, 10 + 1), 0):
+            print('\033[94m' + " " + str(number) + " " + '\033[0m', end="")
+            if i < 10 - 1:
+                print('|', end="")
+        print()
+        print('-' * (4 * 10 + 2))  # Ligne de séparation
 
-            # La boucle prends chaque element de board_player(ligne) et lui donne un chiffre pour chaque ligne(i)
-            for i, ligne in enumerate(board):
-                # Affichage des lettres de A à J pour les lignes avec des séparateurs
-                print(letters[i] + ' | ' + ' | '.join(map(str, ligne)))
-                # print(f"{letters[i]} | {' | '.join(map(str, ligne))}")
-                print('-' * (4 * 10 + 2))  # Ligne de séparation
+        # La boucle prend chaque élément de board_player (ligne) et lui donne un chiffre pour chaque ligne (i)
+        for i, ligne in enumerate(board):
+            # Affichage des lettres de A à J pour les lignes avec des séparateurs
+            print('\033[94m' + letters[i] + '\033[0m | ' + ' | '.join(map(str, ligne)))
+            print('-' * (4 * 10 + 2))  # Ligne de séparation
+        print()
             
     return [dico_boat_player, board]
 
@@ -157,8 +133,8 @@ def add_boat_bot(board_bot, boat_liste):
     for height in boat_liste:
         verif = 0
         while verif != height:
-            x = int(randint(1, 10))-1
-            y = int(randint(1, 10))-1
+            x = int(randint(1, 9))
+            y = int(randint(1, 9))
             direction = choice(liste_direction)
 
             # Vérification que les donné rentré par le joueur rentre dans le plateau
@@ -193,14 +169,18 @@ def add_boat_bot(board_bot, boat_liste):
     # Affichage de la grille avec des lettres pour les lignes et des chiffres pour les colonnes
     letters = 'ABCDEFGHIJ'
     # Affichage des chiffres de 1 à 10 pour les colonnes avec des séparateurs
-    print('    ' + ' | '.join(map(str, range(1, 10 + 1))))
+    print('   ', end="")
+    for i, number in enumerate(range(1, 10 + 1), 0):
+        print('\033[94m' + " " + str(number) + " " + '\033[0m', end="")
+        if i < 10 - 1:
+            print('|', end="")
+    print()
     print('-' * (4 * 10 + 2))  # Ligne de séparation
 
-    # La boucle prends chaque element de board_player(ligne) et lui donne un chiffre pour chaque ligne(i)
+    # La boucle prend chaque élément de board_player (ligne) et lui donne un chiffre pour chaque ligne (i)
     for i, ligne in enumerate(board_bot):
         # Affichage des lettres de A à J pour les lignes avec des séparateurs
-        print(letters[i] + ' | ' + ' | '.join(map(str, ligne)))
-        # print(f"{letters[i]} | {' | '.join(map(str, ligne))}")
+        print('\033[94m' + letters[i] + '\033[0m | ' + ' | '.join(map(str, ligne)))
         print('-' * (4 * 10 + 2))  # Ligne de séparation
     print()
             
@@ -218,19 +198,6 @@ def create_board_bot(size_board):
         for column in range(size_board):
             board_bot[row].append(0)
 
-    # Affichage de la grille avec des lettres pour les lignes et des chiffres pour les colonnes
-    letters = 'ABCDEFGHIJ'
-    # Affichage des chiffres de 1 à 10 pour les colonnes avec des séparateurs
-    print('    ' + ' | '.join(map(str, range(1, size_board + 1))))
-    print('-' * (4 * size_board + 2))  # Ligne de séparation
-
-    # La boucle prends chaque element de board_player(ligne) et lui donne un chiffre pour chaque ligne(i)
-    for i, ligne in enumerate(board_bot):
-        # Affichage des lettres de A à J pour les lignes avec des séparateurs
-        print(letters[i] + ' | ' + ' | '.join(map(str, ligne)))
-        print('-' * (4 * size_board + 2))  # Ligne de séparation
-    print()
-
     return board_bot
 
 def create_board_player(size_board):
@@ -244,19 +211,7 @@ def create_board_player(size_board):
         board_player.append([])
         for column in range(size_board):
             board_player[row].append(0)
-
-    # Affichage de la grille avec des lettres pour les lignes et des chiffres pour les colonnes
-    letters = 'ABCDEFGHIJ'
-    # Affichage des chiffres de 1 à 10 pour les colonnes avec des séparateurs
-    print('    ' + ' | '.join(map(str, range(1, size_board + 1))))
-    print('-' * (4 * size_board + 2))  # Ligne de séparation
-
-    # La boucle prends chaque element de board_player(ligne) et lui donne un chiffre pour chaque ligne(i)
-    for i, ligne in enumerate(board_player):
-        # Affichage des lettres de A à J pour les lignes avec des séparateurs
-        print(letters[i] + ' | ' + ' | '.join(map(str, ligne)))
-        print('-' * (4 * size_board + 2))  # Ligne de séparation
-
+    
     return board_player
 
 def win(board):
@@ -268,15 +223,17 @@ def win(board):
     else:
         return True
     
-
-def fire_player(dico_coordonne, board_bot ):
+def fire_player(board_bot ):
     x = int(input("Rentré les coordonné x comprise entre 1 et 10 "))-1
     y = dico_coordonne[input("Rentré une coordonné y comprise entre A et J ")]
-    if board_bot[x][y] == 1:
-        board_bot[x][y] = 0
-        print("Touché !!")
+    if 9 >= x >= 0 and 9 >= y >= 0:
+        if board_bot[x][y] == 1:
+            board_bot[x][y] = 0
+            print("Touché !!")
+        else:
+            print("Il n'y a pas de bateau ici. Désoler. ")
     else:
-        print("Il n'y a pas de bateau ici. Désoler. ")
+        print("ERROR, les données ne sont pas conforme")
 
     print(board_bot)
     return board_bot
@@ -296,7 +253,25 @@ def fire_bot(liste_atack_bot, board_player):
                 print("Vous n'avez subit aucun dégats !!")
 
 
+def spe_print(board):
 
+    # Affichage de la grille avec des lettres pour les lignes et des chiffres pour les colonnes
+    letters = 'ABCDEFGHIJ'
+    # Affichage des chiffres de 1 à 10 pour les colonnes avec des séparateurs
+    print('   ', end="")
+    for i, number in enumerate(range(1, 10 + 1), 0):
+        print('\033[94m' + " " + str(number) + " " + '\033[0m', end="")
+        if i < 10 - 1:
+            print('|', end="")
+    print()
+    print('-' * (4 * 10 + 2))  # Ligne de séparation
+
+    # La boucle prend chaque élément de board_player (ligne) et lui donne un chiffre pour chaque ligne (i)
+    for i, ligne in enumerate(board):
+        # Affichage des lettres de A à J pour les lignes avec des séparateurs
+        print('\033[94m' + letters[i] + '\033[0m | ' + ' | '.join(map(str, ligne)))
+        print('-' * (4 * 10 + 2))  # Ligne de séparation
+    print()
 
 
 
