@@ -302,7 +302,6 @@ def spe_print(board):
         print('-' * (4 * 10 + 2))  # Ligne de séparation
     print()
 
-def copy_board_bot(board):
 
 
 
