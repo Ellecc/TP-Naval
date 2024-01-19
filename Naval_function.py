@@ -218,10 +218,10 @@ def win(board):
     # verifier si il reste des bateaux(1) dans une matrice
     # matrice(list) --> bool
     # condition: \
-    if 1 in board:
-        return False
-    else:
-        return True
+        if all(1 in i for i in board):
+            return False
+        else:
+            return True
 
 def fire_player(board_bot, dico_boat_bot):
     # tirer sur une case sélectionné 
@@ -246,7 +246,7 @@ def fire_player(board_bot, dico_boat_bot):
     else:
         print("Touché coulé !!! Bien joué.")
 
-    print(board_bot)
+    spe_print(board_bot)
     return board_bot
 
 def fire_bot(liste_attack_bot, board_player, dico_boat_player):
