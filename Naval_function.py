@@ -28,7 +28,7 @@ liste_attack_bot = []
 
 boat_liste = (2, 2, 3, 3, 3, 5)
 
-def add_boat(board, boat):
+def add_boat_player(board, boat):
     dico_boat_player = {}
     num_boat = 0
     # Direction traduit par un nombre pour une meilleur compréhension
@@ -236,8 +236,10 @@ def fire_player(board_bot, dico_boat_bot):
             if [x, y] in boat:
                 dico_boat_bot[boat] -= [x, y]
                 for i in boat:
-                    if board_bot[i [0]][i[1]] == 1:
+                    if board_bot[i[0]][i[1]] == 1:
                         flow = False
+    else:
+        print("Vous n'avez subit aucun dégats !!")
 
     if flow == False:
         print("Touché !!")
@@ -247,7 +249,7 @@ def fire_player(board_bot, dico_boat_bot):
     print(board_bot)
     return board_bot
 
-def fire_bot(liste_atack_bot, board_player, dico_boat_player):
+def fire_bot(liste_attack_bot, board_player, dico_boat_player):
     # tirer sur une case aléatoirement 
     # case déja tirer, plateau du bot, emplacement des bateaux--> plateau
     # condition: tirer sur le plateau et toucher ou toucher coulé et ne pas re-tirer sur la même case
@@ -256,7 +258,7 @@ def fire_bot(liste_atack_bot, board_player, dico_boat_player):
         x = randint(0, 9)
         y = randint(0, 9)
         flow = True
-        if (x, y) not in liste_atack_bot:
+        if (x, y) not in liste_attack_bot:
             if board_player[x][y] == 1:
                 board_player[x][y] = 'x'
                 for boat in dico_boat_player:
@@ -265,8 +267,10 @@ def fire_bot(liste_atack_bot, board_player, dico_boat_player):
                         for i in boat:
                             if dico_boat_player[i [0]][i[1]] == 1:
                                 flow = False
-                liste_atack_bot.append((x, y))
+                liste_attack_bot.append((x, y))
                 valid = True
+            
+                spe_print(board_player)
             else:
                 print("Vous n'avez subit aucun dégats !!")
 
@@ -274,6 +278,8 @@ def fire_bot(liste_atack_bot, board_player, dico_boat_player):
                 print("Touché !!")
             else:
                 print("Touché coulé !!! Bien joué.")
+    
+    return board_player
 
 
 def spe_print(board):
@@ -295,6 +301,8 @@ def spe_print(board):
         print('\033[94m' + letters[i] + '\033[0m | ' + ' | '.join(map(str, ligne)))
         print('-' * (4 * 10 + 2))  # Ligne de séparation
     print()
+
+def copy_board_bot(board):
 
 
 
